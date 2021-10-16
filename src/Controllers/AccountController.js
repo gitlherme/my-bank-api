@@ -1,14 +1,11 @@
 import fs from 'fs'
+import { v4 as uuid } from 'uuid';
+
 const database = JSON.parse(fs.readFileSync('database/accounts.json', 'utf8'))
-
-
-function generateAccountNumber() {
-    return database.accounts.length+1
-}
 
 export default class AccountController {
   async store(req, res) {
-    const account = { id: generateAccountNumber(), ...req.body }
+    const account = { id: uuid(), ...req.body }
     try {
       database.accounts.push(account)
       fs.writeFileSync('database/accounts.json', JSON.stringify(database))
