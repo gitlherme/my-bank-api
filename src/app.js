@@ -1,9 +1,12 @@
-const express = require('express')
+import express from 'express'
+import bodyParser from 'body-parser'
+import accountRouter from './routes/accounts.routes.js'
+
 const app = express()
 const port = 3333
 
-app.get('/', (req, res)=> {
-  res.send('Hello World!')
-})
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use('/accounts', accountRouter)
 
-app.listen(port, () => console.log(`Aplicação rodando em localhost:${port}`))
+app.listen(port, () => console.log(`App is running in localhost:${port}`))
